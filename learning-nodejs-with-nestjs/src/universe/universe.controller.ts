@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { UniverseDto } from './universe.dto';
 import { UniverseService } from './universe.service';
 
@@ -16,5 +16,17 @@ export class UniverseController {
   async createOne(@Body() universe: UniverseDto) {
     const createdUniverse = await this.universeService.createOne(universe);
     return createdUniverse;
+  }
+
+  @Put(':id')
+  async updateOneUniverse(@Body() universe: UniverseDto){
+    const heroes = await this.universeService.updateOne(universe);
+    return heroes;
+  }
+
+  @Delete(':id')
+  async deleteOneUniverse(@Param('id') id: number) {
+    const hero = await this.universeService.deleteOne(id);
+    return hero;
   }
 }

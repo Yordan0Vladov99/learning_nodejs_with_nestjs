@@ -7,7 +7,7 @@ import {
 import { Power } from 'src/powers/power.entity';
 import { Filter } from 'src/shared/models/filter';
 import { Universe } from 'src/universe/universe.entity';
-import { DataSource, In, Repository } from 'typeorm';
+import { DataSource, In, Like, Repository } from 'typeorm';
 import { HeroDto } from './hero.dto';
 import { Hero } from './hero.entity';
 import { rm } from 'fs/promises';
@@ -45,11 +45,22 @@ export class HeroService {
     });
   }
 
+  public async findHeroesByName(name: String) {
+
+    const heroes = this.heroRepository.find({
+      where: {name: Like(`%${name}%`)
+    }});
+
+    return heroes;
+  }
+
+
   public async findOneHero(id: number) {
     const hero = await this.heroRepository.findOne({
       where: { id: id },
       relations: ['powers', 'universe'],
     });
+    
     return hero;
   }
 

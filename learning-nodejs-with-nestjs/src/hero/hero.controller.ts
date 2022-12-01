@@ -39,6 +39,12 @@ export class HeroController {
     return hero;
   }
 
+  @Get('/getName/:name')
+  async getHeroesByName(@Param('name') name) {
+    const heroes = await this.heroService.findHeroesByName(name);
+    return heroes;
+  }
+
   @Post()
   async createOneHero(@Body() hero: HeroDto) {
     const heroes = await this.heroService.createOne(hero);
